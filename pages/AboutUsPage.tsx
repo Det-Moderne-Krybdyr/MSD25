@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image } from "react-native";
+import styles from "../styles/AboutUsPage.styles";
 
 const AboutUsPage = () => {
   return (
@@ -9,9 +10,6 @@ const AboutUsPage = () => {
         style={styles.logo}
         resizeMode="contain"
       />
-
-      <Text style={styles.title}>About Us</Text>
-
       <Text style={styles.text}>
         Welcome to Drive Now Rentals, your trusted partner for all your mobility needs.
         We offer a wide range of vehicles — from compact cars for city driving to spacious SUVs for family adventures.
@@ -22,32 +20,5 @@ const AboutUsPage = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingHorizontal: 20
-  },
-  logo: {
-    width: 300,
-    height: 300,
-    marginBottom: 10,
-    marginTop: 30,
-  },
-  title: {
-    fontSize: 30,
-    marginBottom: 20,
-    color: "#181d45",
-    fontWeight: "bold",
-  },
-  text:  { 
-    fontSize: 16,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 10,
-  },
-});
 
 export default AboutUsPage;
