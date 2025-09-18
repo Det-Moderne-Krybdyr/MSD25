@@ -1,13 +1,12 @@
 import * as React from 'react';
-import Navigation from "./Navigation/BottomTabNavigator";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import BottomTabNavigator from "./Navigation/BottomTabNavigator";
-import {SafeAreaProviderCompat} from "@react-navigation/elements";
+import MainNavigator from "./navigation/rootNavigator";
+import {SafeAreaProvider} from "react-native-safe-area-context";
+import styles from "./styles/Styles";
 
 export default function App() {
     return (
-        <SafeAreaProviderCompat>
-            <BottomTabNavigator />
-        </SafeAreaProviderCompat>
+        <SafeAreaProvider style={styles.AndroidSafeArea}>
+            <MainNavigator />
+        </SafeAreaProvider>
     )
 }

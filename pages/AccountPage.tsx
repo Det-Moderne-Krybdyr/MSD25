@@ -4,7 +4,7 @@ import styles from "../styles/Styles";
 
 function AccountPage(): JSX.Element {
     return (
-        <View style={styles.container}>
+        <View style={{flex: 1, backgroundColor: "#fff"}}>
             <Text>Account Page</Text>
         </View>
     )

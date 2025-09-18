@@ -4,7 +4,7 @@ import styles from "../styles/Styles";
 
 function HomePage(): JSX.Element {
     return (
-        <View style={styles.container}>
+        <View style={{flex: 1, backgroundColor: "#fff"}}>
             <Text>Home Page</Text>
         </View>
     )

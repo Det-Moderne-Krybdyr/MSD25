@@ -4,7 +4,7 @@ import {JSX} from "react";
 
 function MapPage(): JSX.Element {
     return (
-        <View style={styles.container}>
+        <View style={{flex: 1, backgroundColor: "#fff"}}>
             <Text>Map Page</Text>
         </View>
     )
