@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, Image} from "react-native";
 
 const AccountPage = () => {
     return (
@@ -8,4 +8,4 @@ const AccountPage = () => {
     )
 }
 
-export default AccountPage
+export default AccountPage;
