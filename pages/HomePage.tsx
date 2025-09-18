@@ -1,6 +1,7 @@
 import {Text, View} from "react-native";
+import {JSX} from "react";
 
-const HomePage = () => {
+function HomePage(): JSX.Element {
     return (
         <View>
             <Text>Home Page</Text>

@@ -1,6 +1,7 @@
 import {View, Text} from "react-native";
+import {JSX} from "react";
 
-const AccountPage = () => {
+function AccountPage(): JSX.Element {
     return (
         <View>
             <Text>Account Page</Text>

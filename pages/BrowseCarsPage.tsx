@@ -1,7 +1,8 @@
 import styles from "../styles/Styles";
 import {Text, View} from "react-native";
+import {JSX} from "react";
 
-const BrowseCarsPage = () => {
+function BrowseCarsPage(): JSX.Element {
     return (
         <View>
             <Text>Browse Page</Text>
