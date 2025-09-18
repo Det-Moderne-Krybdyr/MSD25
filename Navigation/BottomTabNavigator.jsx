@@ -1,9 +1,9 @@
 import {BottomTabBar, createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomePage from "../pages/HomePage";
-import BrowseCarsPage from "../pages/BrowseCarsPage";
+import MapPage from "../pages/MapPage";
 import {View} from "react-native";
 import AccountPage from "../pages/AccountPage";
-import {House, User, Car} from "lucide-react-native"
+import {House, User, MapPin, Map} from "lucide-react-native"
 import {createStackNavigator} from "@react-navigation/native/src/__stubs__/createStackNavigator";
 import {NavigationContainer} from "@react-navigation/native";
 
@@ -47,7 +47,24 @@ const BottomNavigator = () => {
                     headerShown: false,
                     tabBarIcon: ({focused}) =>
                         focused ? (
-                            <House size={30} color="gray" />
+                            <MapPin size={30} color="black" />
+                        ) : (
+                            <MapPin size={30} color="gray" />
+                        ),
+                }}
+                name="Map"
+                listeners={tabBarListeners}
+                component={MapPage}
+            />
+            <BottomTabNavigator.Screen
+                options={{
+                    tabBarShowLabel: true,
+                    gestureEnabled: false,
+                    unmountOnBlur: true,
+                    headerShown: false,
+                    tabBarIcon: ({focused}) =>
+                        focused ? (
+                            <House size={30} color="black" />
                         ) : (
                             <House size={30} color="gray" />
                         ),
@@ -64,24 +81,7 @@ const BottomNavigator = () => {
                     headerShown: false,
                     tabBarIcon: ({focused}) =>
                         focused ? (
-                            <Car size={30} color="gray" />
-                        ) : (
-                            <Car size={30} color="gray" />
-                        ),
-                }}
-                name="Browse"
-                listeners={tabBarListeners}
-                component={BrowseCarsPage}
-            />
-            <BottomTabNavigator.Screen
-                options={{
-                    tabBarShowLabel: true,
-                    gestureEnabled: false,
-                    unmountOnBlur: true,
-                    headerShown: false,
-                    tabBarIcon: ({focused}) =>
-                        focused ? (
-                            <User size={30} color="gray" />
+                            <User size={30} color="black" />
                         ) : (
                             <User size={30} color="gray" />
                         ),
@@ -90,6 +90,7 @@ const BottomNavigator = () => {
                 listeners={tabBarListeners}
                 component={AccountPage}
             />
+
         </BottomTabNavigator.Navigator>
     );
 };

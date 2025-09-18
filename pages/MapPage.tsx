@@ -2,12 +2,12 @@ import styles from "../styles/Styles";
 import {Text, View} from "react-native";
 import {JSX} from "react";
 
-function BrowseCarsPage(): JSX.Element {
+function MapPage(): JSX.Element {
     return (
-        <View>
-            <Text>Browse Page</Text>
+        <View style={styles.container}>
+            <Text>Map Page</Text>
         </View>
     )
 }
 
-export default BrowseCarsPage;
+export default MapPage;
