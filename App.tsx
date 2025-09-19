@@ -1,19 +1,12 @@
 import * as React from 'react';
-import {
-    createStaticNavigation,
-    NavigationContainer,
-} from '@react-navigation/native';
-import { View, Platform } from 'react-native';
-import { useLinkBuilder, useTheme } from '@react-navigation/native';
-import { Text, PlatformPressable } from '@react-navigation/elements';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Navigation from "./Navigation/BottomTabNavigator";
-
-
-
-
-
+import MainNavigator from "./navigation/rootNavigator";
+import {SafeAreaProvider} from "react-native-safe-area-context";
+import styles from "./styles/Styles";
 
 export default function App() {
-    return <Navigation />;
+    return (
+        <SafeAreaProvider style={styles.AndroidSafeArea}>
+            <MainNavigator />
+        </SafeAreaProvider>
+    )
 }
