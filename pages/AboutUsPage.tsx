@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import styles from "../styles/AboutUsPage.styles";
+import FullScreenStack from "../components/FullScreenStack";
 
-const AboutUsPage = () => {
+const AboutUsPage = ({navigation}:{navigation: any}) => {
   return (
-    <View style={styles.container}>
+    <FullScreenStack navigation={navigation}>
       <Image
         source={require("../assets/logo.png")}
         style={styles.logo}
@@ -17,7 +18,7 @@ const AboutUsPage = () => {
         24/7 customer support, and a commitment to safety and quality, we ensure your journey is smooth and enjoyable.
         At Drive Now Rentals, we put our customers first, because your satisfaction drives us forward.
       </Text>
-    </View>
+    </FullScreenStack>
   );
 };
 

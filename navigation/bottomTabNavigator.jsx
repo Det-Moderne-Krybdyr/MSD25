@@ -2,24 +2,27 @@ import {BottomTabBar, createBottomTabNavigator} from "@react-navigation/bottom-t
 import HomePage from "../pages/HomePage";
 import MapPage from "../pages/MapPage";
 import {View} from "react-native";
-import AccountPage from "../pages/AccountPage";
+import ProfilePage from "../pages/ProfilePage";
 import {House, User, MapPin} from "lucide-react-native"
+import HomeStack from "./navigators/homeStackNavigator";
+import MapStack from "./navigators/mapStackNavigator";
+import ProfileStack from "./navigators/profileStackNavigator";
 
 const tabs = [
     {
         Icon: MapPin,
         name: "Map",
-        component: MapPage,
+        component: MapStack,
     },
     {
         Icon: House,
         name: "Home",
-        component: HomePage,
+        component: HomeStack,
     },
     {
         Icon: User,
         name: "Profile",
-        component: AccountPage,
+        component: ProfileStack,
     },
 ]
 

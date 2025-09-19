@@ -2,7 +2,7 @@ import {View, Text} from "react-native";
 import {JSX} from "react";
 import styles from "../styles/Styles";
 
-function AccountPage(): JSX.Element {
+function ProfilePage(): JSX.Element {
     return (
         <View style={{flex: 1, backgroundColor: "#fff"}}>
             <Text>Account Page</Text>
@@ -10,4 +10,4 @@ function AccountPage(): JSX.Element {
     )
 }
 
-export default AccountPage
+export default ProfilePage
