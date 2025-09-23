@@ -7,6 +7,7 @@ import ChoosenCarPage from "../../pages/ChoosenCarPage";
 import ConfirmRentalPage from "../../pages/ConfirmRentalPage";
 import TermsPage from "../../pages/TermsPage";
 import RentalConfirmedPage from "../../pages/RentalConfirmedPage";
+import RentalDetailsPage from "../../pages/RentalDetailsPage";
 
 const pages = [
   { name: "Home", component: HomePage },
@@ -17,6 +18,7 @@ const pages = [
   { name: "ConfirmRentalPage", component: ConfirmRentalPage },
   { name: "TermsPage", component: TermsPage },
   { name: "RentalConfirmedPage", component: RentalConfirmedPage },
+  { name: "RentalDetailsPage", component: RentalDetailsPage },
 ];
 
 const Stack = createStackNavigator();
