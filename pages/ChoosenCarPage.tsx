@@ -47,6 +47,8 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
     return marked;
   };
 
+  const isFormComplete = pickup && dropoff && range.start && range.end;
+
   return (
     <View style={styles.container}>
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -78,7 +80,12 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
       </Pressable>
 
       <Pressable
-        style={({ pressed }) => [styles.rentButton, pressed && styles.rentButtonPressed]}
+        style={({ pressed }) => [
+          styles.rentButton,
+          pressed && isFormComplete && styles.rentButtonPressed,
+          !isFormComplete && { opacity: 0.5 },
+        ]}
+        disabled={!isFormComplete}
         onPress={() =>
           navigation.navigate("ConfirmRentalPage", {
             car,
@@ -89,7 +96,9 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
         }
       >
         {({ pressed }) => (
-          <Text style={pressed ? styles.rentButtonTextPressed : styles.rentButtonText}>Rent this car now</Text>
+          <Text style={pressed ? styles.rentButtonTextPressed : styles.rentButtonText}>
+            Rent this car now
+          </Text>
         )}
       </Pressable>
 
