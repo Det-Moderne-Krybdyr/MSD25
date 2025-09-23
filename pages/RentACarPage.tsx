@@ -5,9 +5,9 @@ import { ChevronDown, Calendar as CalendarIcon } from "lucide-react-native";
 import styles from "../styles/RentACarPage.styles";
 
 const carsData = [
-  { id: "1", name: "Audi A3 Sportback", image: require("../assets/audi.png") },
-  { id: "2", name: "Volkswagen ID.7", image: require("../assets/vw.png") },
-  { id: "3", name: "Hyundai i20", image: require("../assets/hyundai.png") },
+  { id: "1", name: "Audi A3 Sportback", image: require("../assets/audi.png"), price: "100 kr./dag" },
+  { id: "2", name: "Volkswagen ID.7", image: require("../assets/vw.png"), price: "120 kr./dag" },
+  { id: "3", name: "Hyundai i20", image: require("../assets/hyundai.png"), price: "80 kr./dag" },
 ];
 
 const locations = ["Copenhagen", "Aarhus", "Odense", "Aalborg"];
@@ -83,7 +83,9 @@ function RentACarPage({ navigation }) {
                   onPress={() => onViewDetails(item)}
                 >
                   {({ pressed }) => (
-                    <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>View Details</Text>
+                    <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>
+                      View Details
+                    </Text>
                   )}
                 </Pressable>
               </View>

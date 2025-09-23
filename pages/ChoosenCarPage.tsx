@@ -78,6 +78,9 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
           {range?.start ? (range.end ? `${range.start} → ${range.end}` : range.start) : "Select rental dates"}
         </Text>
       </Pressable>
+      <View style={styles.input}>
+        <Text style={styles.inputText}>{car.price}</Text>
+      </View>
 
       <Pressable
         style={({ pressed }) => [
@@ -109,6 +112,7 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
           </View>
         </Pressable>
       </Modal>
+
 
       <Modal visible={!!locationModalVisible} transparent animationType="fade">
         <Pressable style={styles.modalOverlay} onPress={() => setLocationModalVisible(null)}>

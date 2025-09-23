@@ -10,11 +10,17 @@ function ConfirmRentalPage({ route, navigation }: any) {
   const [inputEmail, setInputEmail] = useState(email || "johndoe@email.com");
   const [accepted, setAccepted] = useState(false);
 
-  const isFormComplete = inputName.trim() !== "" && inputEmail.trim() !== "" && accepted;
+  const canConfirm =
+    inputName.trim() !== "" &&
+    inputEmail.trim() !== "" &&
+    accepted;
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+      <Pressable
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
 
@@ -60,6 +66,10 @@ function ConfirmRentalPage({ route, navigation }: any) {
           editable={false}
         />
       </View>
+      <View style={styles.inputBox}>
+        <Text style={styles.label}>Car</Text>
+        <TextInput style={styles.input} value={car.price} editable={false} />
+      </View>
 
       <View style={styles.checkboxRow}>
         <Checkbox
@@ -82,15 +92,24 @@ function ConfirmRentalPage({ route, navigation }: any) {
       <Pressable
         style={({ pressed }) => [
           styles.confirmButton,
-          pressed && isFormComplete && styles.confirmButtonPressed,
-          !isFormComplete && { opacity: 0.5 },
+          pressed && styles.confirmButtonPressed,
         ]}
-        disabled={!isFormComplete}
+        disabled={!canConfirm}
+        onPress={() =>
+          navigation.navigate("RentalConfirmedPage", {
+            name: inputName,
+            email: inputEmail,
+            car,
+            pickup,
+            dropoff,
+            range,
+          })
+        }
       >
         <Text
           style={[
             styles.confirmButtonText,
-            !isFormComplete && { opacity: 0.5 },
+            !canConfirm && { opacity: 0.5 },
           ]}
         >
           Confirm rental

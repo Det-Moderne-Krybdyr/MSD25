@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
   },
   carImage: {
     width: "100%",
-    height: 200,
+    height: 180,
     marginBottom: 10,
   },
   input: {
     width: "100%",
-    minHeight: 60,
+    minHeight: 50,
     borderWidth: 2,
     borderColor: "#181d45",
     borderRadius: 8,
