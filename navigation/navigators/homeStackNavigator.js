@@ -3,12 +3,21 @@ import HomePage from "../../pages/HomePage";
 import AboutUsPage from "../../pages/AboutUsPage";
 import RentalsPage from "../../pages/RentalsPage";
 import RentACarPage from "../../pages/RentACarPage";
+import ChoosenCarPage from "../../pages/ChoosenCarPage";
+import ConfirmRentalPage from "../../pages/ConfirmRentalPage";
+import TermsPage from "../../pages/TermsPage";
+
+
 
 const pages = [
     {name: "Home", component: HomePage},
     {name: "AboutUs", component: AboutUsPage},
     {name: "Rentals", component: RentalsPage},
     {name: "RentACar", component: RentACarPage},
+    {name: "ChoosenCarPage", component: ChoosenCarPage},
+    {name: "ConfirmRentalPage", component: ConfirmRentalPage},
+    {name: "TermsPage", component: TermsPage},
+
 ]
 
 const Stack = createStackNavigator()
