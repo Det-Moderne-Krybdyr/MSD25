@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 16,
     justifyContent: "space-between",
-    marginTop: 30,
+    paddingTop: 60,
   },
   button: {
     flex: 1,
