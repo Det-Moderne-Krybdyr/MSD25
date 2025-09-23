@@ -28,24 +28,24 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     width: "100%",
-    backgroundColor: "#a9cdeb",
+    backgroundColor: "#181d45",
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: "center",
-    marginTop: 16,
+    marginTop: 0,
   },
   saveButtonPressed: {
-    backgroundColor: "#181d45",
+    backgroundColor: "#a9cdeb",
   },
   saveButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#181d45",
+    color: "#a9cdeb",
   },
   saveButtonTextPressed: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#a9cdeb",
+    color: "#181d45",
   },
 });
 
