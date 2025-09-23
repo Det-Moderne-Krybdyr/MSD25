@@ -10,6 +10,11 @@ function ConfirmRentalPage({ route, navigation }: any) {
   const [inputEmail, setInputEmail] = useState(email || "johndoe@email.com");
   const [accepted, setAccepted] = useState(false);
 
+  const canConfirm =
+    inputName.trim() !== "" &&
+    inputEmail.trim() !== "" &&
+    accepted;
+
   return (
     <View style={styles.container}>
       <Pressable
@@ -61,6 +66,10 @@ function ConfirmRentalPage({ route, navigation }: any) {
           editable={false}
         />
       </View>
+      <View style={styles.inputBox}>
+        <Text style={styles.label}>Car</Text>
+        <TextInput style={styles.input} value={car.price} editable={false} />
+      </View>
 
       <View style={styles.checkboxRow}>
         <Checkbox
@@ -85,12 +94,22 @@ function ConfirmRentalPage({ route, navigation }: any) {
           styles.confirmButton,
           pressed && styles.confirmButtonPressed,
         ]}
-        disabled={!accepted}
+        disabled={!canConfirm}
+        onPress={() =>
+          navigation.navigate("RentalConfirmedPage", {
+            name: inputName,
+            email: inputEmail,
+            car,
+            pickup,
+            dropoff,
+            range,
+          })
+        }
       >
         <Text
           style={[
             styles.confirmButtonText,
-            !accepted && { opacity: 0.5 },
+            !canConfirm && { opacity: 0.5 },
           ]}
         >
           Confirm rental

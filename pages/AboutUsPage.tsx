@@ -4,12 +4,8 @@ import styles from "../styles/AboutUsPage.styles";
 
 const AboutUsPage = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", padding: 16 }}>
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+    <View style={styles.container}>
+      <Image source={require("../assets/logo.png")} style={styles.logo} resizeMode="contain" />
       <Text style={styles.text}>
         Welcome to Drive Now Rentals, your trusted partner for all your mobility needs.
         We offer a wide range of vehicles — from compact cars for city driving to spacious SUVs for family adventures.

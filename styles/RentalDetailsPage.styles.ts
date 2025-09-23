@@ -5,14 +5,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
     paddingTop: 60,
+    paddingHorizontal: 20,
   },
-  logo: {
-    width: 300,
-    height: 300,
-    marginBottom: 15,
+  backButton: {
+    alignSelf: "flex-start",
+    marginBottom: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  backButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#181d45",
   },
   infoBox: {
     width: "100%",
@@ -33,28 +38,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 4,
     color: "#000",
-  },
-  button: {
-    width: "100%",
-    minHeight: 70,
-    borderRadius: 8,
-    marginVertical: 8,
-    backgroundColor: "#181d45",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonPressed: {
-    backgroundColor: "#a9cdeb",
-  },
-  buttonText: {
-    color: "#a9cdeb",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  buttonTextPressed: {
-    color: "#181d45",
-    fontSize: 18,
-    fontWeight: "bold",
   },
 });
 

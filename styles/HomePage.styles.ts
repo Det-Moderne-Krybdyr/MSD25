@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     color: "#181d45",
     fontSize: 40,
     fontWeight: "bold",
-    marginTop: 0,
   },
   icon1: {
     width: 250,

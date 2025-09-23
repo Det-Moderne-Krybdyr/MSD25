@@ -5,7 +5,7 @@ import styles from "../styles/ChoosenCarPage.styles";
 
 const locations = ["Copenhagen", "Aarhus", "Odense"];
 
-function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }): JSX.Element {
+function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) {
   const { car, range: initialRange, location: initialLocation } = route.params;
 
   const [pickup, setPickup] = useState(initialLocation || "");
@@ -47,9 +47,11 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }):
     return marked;
   };
 
+  const isFormComplete = pickup && dropoff && range.start && range.end;
+
   return (
     <View style={styles.container}>
-      <Pressable style={styles.backButton} onPress={() => navigation.navigate("RentACar")}>
+      <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
 
@@ -73,19 +75,20 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }):
 
       <Pressable style={styles.input} onPress={() => setCalendarVisible(true)}>
         <Text style={range?.start ? styles.inputText : styles.placeholderText}>
-          {range?.start
-            ? range.end
-              ? `${range.start} → ${range.end}`
-              : range.start
-            : "Select rental dates"}
+          {range?.start ? (range.end ? `${range.start} → ${range.end}` : range.start) : "Select rental dates"}
         </Text>
       </Pressable>
+      <View style={styles.input}>
+        <Text style={styles.inputText}>{car.price}</Text>
+      </View>
 
       <Pressable
         style={({ pressed }) => [
           styles.rentButton,
-          pressed && styles.rentButtonPressed,
+          pressed && isFormComplete && styles.rentButtonPressed,
+          !isFormComplete && { opacity: 0.5 },
         ]}
+        disabled={!isFormComplete}
         onPress={() =>
           navigation.navigate("ConfirmRentalPage", {
             car,
@@ -105,14 +108,11 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }):
       <Modal visible={calendarVisible} transparent animationType="slide">
         <Pressable style={styles.modalOverlay} onPress={() => setCalendarVisible(false)}>
           <View style={styles.calendarModalContent}>
-            <Calendar
-              onDayPress={onDayPress}
-              markingType="period"
-              markedDates={getMarkedDates()}
-            />
+            <Calendar onDayPress={onDayPress} markingType="period" markedDates={getMarkedDates()} />
           </View>
         </Pressable>
       </Modal>
+
 
       <Modal visible={!!locationModalVisible} transparent animationType="fade">
         <Pressable style={styles.modalOverlay} onPress={() => setLocationModalVisible(null)}>

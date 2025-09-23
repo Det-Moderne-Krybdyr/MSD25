@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 
 export default function MapPage() {
-    const html = `<!doctype html><html><head>
+  const html = `<!doctype html><html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
@@ -39,11 +39,14 @@ export default function MapPage() {
 </script>
 </body></html>`;
 
-    return (
-        <View style={styles.container}>
-            <WebView originWhitelist={["*"]} source={{ html }} style={styles.map} scrollEnabled={false}/>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <WebView originWhitelist={["*"]} source={{ html }} style={styles.map} scrollEnabled={false} />
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({ container: { flex: 1 }, map: { flex: 1 } });
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  map: { flex: 1 },
+});

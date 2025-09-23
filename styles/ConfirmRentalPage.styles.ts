@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   backButton: {
     alignSelf: "flex-start",
     marginLeft: 20,
-    marginBottom: 40,
+    marginBottom: 25,
   },
   backButtonText: {
     color: "#181d45",
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     width: "90%",
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#181d45",
     borderRadius: 8,
     padding: 10,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   label: {
     color: "#181d45",
     fontWeight: "bold",
-    marginBottom: 4,
+    marginBottom: 0,
   },
   input: {
     fontSize: 16,
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
   checkboxRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 0,
     marginBottom: 20,
     width: "90%",
     marginLeft: 10,
@@ -61,11 +60,11 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     backgroundColor: "#a9cdeb",
-    paddingVertical: 14,
-    paddingHorizontal: 40,
+    height: 50,
     borderRadius: 8,
     width: "90%",
     alignItems: "center",
+    justifyContent: "center",
   },
   confirmButtonPressed: {
     backgroundColor: "#181d45",

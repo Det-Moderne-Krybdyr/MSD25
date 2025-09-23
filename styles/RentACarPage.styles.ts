@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   listContent: {
     paddingHorizontal: 16,
     paddingBottom: 24,
+    paddingVertical: 15,
   },
   shadowCard: {
     borderRadius: 12,
@@ -80,23 +81,21 @@ const styles = StyleSheet.create({
     color: "#181d45",
   },
   detailsButton: {
-    backgroundColor: "#a9cdeb",
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 14,
   },
-  detailsButtonPressed: {
-    backgroundColor: "#181d45",
-  },
   detailsButtonText: {
     color: "#181d45",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   detailsButtonTextPressed: {
     color: "#a9cdeb",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   modalOverlay: {
     flex: 1,

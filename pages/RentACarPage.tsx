@@ -5,9 +5,9 @@ import { ChevronDown, Calendar as CalendarIcon } from "lucide-react-native";
 import styles from "../styles/RentACarPage.styles";
 
 const carsData = [
-  { id: "1", name: "Audi A3 Sportback", image: require("../assets/audi.png") },
-  { id: "2", name: "Volkswagen ID.7", image: require("../assets/vw.png") },
-  { id: "3", name: "Hyundai i20", image: require("../assets/hyundai.png") },
+  { id: "1", name: "Audi A3 Sportback", image: require("../assets/audi.png"), price: "100 kr./dag" },
+  { id: "2", name: "Volkswagen ID.7", image: require("../assets/vw.png"), price: "120 kr./dag" },
+  { id: "3", name: "Hyundai i20", image: require("../assets/hyundai.png"), price: "80 kr./dag" },
 ];
 
 const locations = ["Copenhagen", "Aarhus", "Odense", "Aalborg"];
@@ -16,12 +16,9 @@ function RentACarPage({ navigation }) {
   const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const [range, setRange] = useState<{ start: string | null; end: string | null }>({
-    start: null,
-    end: null,
-  });
+  const [range, setRange] = useState<{ start: string | null; end: string | null }>({ start: null, end: null });
 
-  const handleDayPress = (day) => {
+  const handleDayPress = (day: any) => {
     if (!range.start || (range.start && range.end)) {
       setRange({ start: day.dateString, end: null });
     } else if (range.start && !range.end) {
@@ -36,11 +33,8 @@ function RentACarPage({ navigation }) {
 
   const getMarkedDates = () => {
     if (!range.start) return {};
-    if (!range.end)
-      return {
-        [range.start]: { startingDay: true, color: "#a9cdeb", textColor: "#181d45" },
-      };
-    let dates = {};
+    if (!range.end) return { [range.start]: { startingDay: true, color: "#a9cdeb", textColor: "#181d45" } };
+    let dates: any = {};
     let current = new Date(range.start);
     let last = new Date(range.end);
     while (current <= last) {
@@ -56,17 +50,14 @@ function RentACarPage({ navigation }) {
     return dates;
   };
 
-  const onViewDetails = (car) => {
+  const onViewDetails = (car: any) => {
     navigation.navigate("ChoosenCarPage", { car, location: selectedLocation, range });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.topControls}>
-        <TouchableOpacity
-          style={styles.pickerButton}
-          onPress={() => setLocationModalVisible(true)}
-        >
+        <TouchableOpacity style={styles.pickerButton} onPress={() => setLocationModalVisible(true)}>
           <Text style={[styles.pickerText, !selectedLocation && styles.placeholderText]}>
             {selectedLocation || "Choose pickup location"}
           </Text>
@@ -88,19 +79,11 @@ function RentACarPage({ navigation }) {
               <View style={styles.cardFooter}>
                 <Text style={styles.carName}>{item.name}</Text>
                 <Pressable
-                  style={({ pressed }) => [
-                    styles.detailsButton,
-                    pressed && styles.detailsButtonPressed,
-                  ]}
+                  style={({ pressed }) => [styles.detailsButton, pressed && styles.detailsButtonPressed]}
                   onPress={() => onViewDetails(item)}
                 >
                   {({ pressed }) => (
-                    <Text
-                      style={[
-                        styles.detailsButtonText,
-                        pressed && styles.detailsButtonTextPressed,
-                      ]}
-                    >
+                    <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>
                       View Details
                     </Text>
                   )}
@@ -112,10 +95,7 @@ function RentACarPage({ navigation }) {
       />
 
       <Modal transparent visible={locationModalVisible} animationType="fade">
-        <TouchableOpacity
-          style={styles.modalOverlay}
-          onPress={() => setLocationModalVisible(false)}
-        >
+        <TouchableOpacity style={styles.modalOverlay} onPress={() => setLocationModalVisible(false)}>
           <View style={styles.modalContent}>
             {locations.map((loc) => (
               <TouchableOpacity
@@ -134,16 +114,9 @@ function RentACarPage({ navigation }) {
       </Modal>
 
       <Modal transparent visible={calendarVisible} animationType="slide">
-        <TouchableOpacity
-          style={styles.modalOverlay}
-          onPress={() => setCalendarVisible(false)}
-        >
+        <TouchableOpacity style={styles.modalOverlay} onPress={() => setCalendarVisible(false)}>
           <View style={styles.calendarModalContent}>
-            <Calendar
-              onDayPress={handleDayPress}
-              markedDates={getMarkedDates()}
-              markingType="period"
-            />
+            <Calendar onDayPress={handleDayPress} markedDates={getMarkedDates()} markingType="period" />
           </View>
         </TouchableOpacity>
       </Modal>
