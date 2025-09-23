@@ -58,8 +58,8 @@ const BottomNavigator = () => {
           backgroundColor: "#181d45",       // dark blue background
           borderTopWidth: 0,
           elevation: 0,
-          paddingTop: 8,
-          height: 65,
+          paddingTop: 12,
+          height: 75,
         },
         tabBarLabelStyle: {
           fontFamily: "Arial",

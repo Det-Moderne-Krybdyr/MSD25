@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   sectionLabel: {
-    backgroundColor: "#a9cdeb",
+    backgroundColor: "#181d45",
     borderColor: "#181d45",
     borderWidth: 2,
     borderRadius: 8,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     fontSize: 18,
     fontWeight: "bold",
-    color: "#181d45",
+    color: "#fff",
     textAlign: "center",
   },
   card: {
