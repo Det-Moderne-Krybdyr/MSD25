@@ -1,17 +1,39 @@
-import {Button, Text, View} from "react-native";
-import {JSX} from "react";
-import styles from "../styles/Styles";
+import React from "react";
+import { Text, TouchableOpacity, View, Image } from "react-native";
+import styles from "../styles/HomePage.styles";
 
-function  HomePage({navigation}: {navigation: any}) {
-    return (
-        <View style={{flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center"}}>
-            <Text>Home Page</Text>
-            <Button title={"About Us"} onPress={() => navigation.navigate("AboutUs")}></Button>
-            <Button title={"Rent A Car"} onPress={() => navigation.navigate("RentACar")}></Button>
-            <Button title={"Rentals"} onPress={() => navigation.navigate("Rentals")}></Button>
+type HomePageProps = {
+  readonly navigation: any;
+};
 
-        </View>
-    )
+function HomePage({ navigation }: HomePageProps) {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("RentACar")}
+      >
+        <Image source={require("../assets/dn.png")} style={styles.icon1} />
+        <Text style={styles.buttonText}>Rent A Car</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Rentals")}
+      >
+        <Image source={require("../assets/car.png")} style={styles.icon2} />
+        <Text style={styles.buttonText}>Rentals</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("AboutUs")}
+      >
+        <Image source={require("../assets/au.png")} style={styles.icon3} />
+        <Text style={styles.buttonText}>About Us</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 export default HomePage;
