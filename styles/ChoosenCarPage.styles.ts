@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   rentButton: {
     width: "100%",
-    minHeight: 70,
+    minHeight: 60,
     borderRadius: 8,
     marginTop: 10,
     backgroundColor: "#a9cdeb",

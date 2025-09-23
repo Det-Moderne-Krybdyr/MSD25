@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     width: "90%",
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#181d45",
     borderRadius: 8,
     padding: 10,
@@ -37,16 +37,14 @@ const styles = StyleSheet.create({
   checkboxRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 0,
-    marginBottom: 20,
     width: "90%",
-    marginLeft: 10,
+    marginBottom: 20,
   },
   checkbox: {
     marginRight: 8,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     borderColor: "#181d45",
   },
   checkboxText: {
@@ -61,11 +59,11 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     backgroundColor: "#a9cdeb",
-    paddingVertical: 14,
-    paddingHorizontal: 40,
+    height: 60,
     borderRadius: 8,
     width: "90%",
     alignItems: "center",
+    justifyContent: "center",
   },
   confirmButtonPressed: {
     backgroundColor: "#181d45",
@@ -74,6 +72,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#181d45",
+  },
+  confirmButtonTextPressed: {
+    color: "#a9cdeb",
   },
 });
 

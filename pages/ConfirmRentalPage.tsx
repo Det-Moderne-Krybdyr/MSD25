@@ -12,20 +12,13 @@ function ConfirmRentalPage({ route, navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Pressable
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
+      <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
 
       <View style={styles.inputBox}>
         <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
-          value={inputName}
-          onChangeText={setInputName}
-        />
+        <TextInput style={styles.input} value={inputName} onChangeText={setInputName} />
       </View>
 
       <View style={styles.inputBox}>
@@ -55,11 +48,7 @@ function ConfirmRentalPage({ route, navigation }: any) {
 
       <View style={styles.inputBox}>
         <Text style={styles.label}>Dates</Text>
-        <TextInput
-          style={styles.input}
-          value={`${range.start} - ${range.end}`}
-          editable={false}
-        />
+        <TextInput style={styles.input} value={`${range.start} - ${range.end}`} editable={false} />
       </View>
 
       <View style={styles.checkboxRow}>
@@ -71,30 +60,17 @@ function ConfirmRentalPage({ route, navigation }: any) {
         />
         <Text style={styles.checkboxText}>
           I confirm that I have read and accepted the{" "}
-          <Text
-            style={styles.link}
-            onPress={() => navigation.navigate("TermsPage")}
-          >
+          <Text style={styles.link} onPress={() => navigation.navigate("TermsPage")}>
             terms and conditions
           </Text>
         </Text>
       </View>
 
       <Pressable
-        style={({ pressed }) => [
-          styles.confirmButton,
-          pressed && styles.confirmButtonPressed,
-        ]}
+        style={({ pressed }) => [styles.confirmButton, pressed && styles.confirmButtonPressed]}
         disabled={!accepted}
       >
-        <Text
-          style={[
-            styles.confirmButtonText,
-            !accepted && { opacity: 0.5 },
-          ]}
-        >
-          Confirm rental
-        </Text>
+        <Text style={[styles.confirmButtonText, !accepted && { opacity: 0.5 }]}>Confirm rental</Text>
       </Pressable>
     </View>
   );

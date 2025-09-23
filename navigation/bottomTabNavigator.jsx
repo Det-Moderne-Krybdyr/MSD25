@@ -1,48 +1,32 @@
 import { BottomTabBar, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 import { House, User, MapPin } from "lucide-react-native";
-
 import HomeStack from "./navigators/homeStackNavigator";
 import MapStack from "./navigators/mapStackNavigator";
 import ProfileStack from "./navigators/profileStackNavigator";
 
 const tabs = [
-  {
-    Icon: MapPin,
-    name: "Map",
-    component: MapStack,
-  },
-  {
-    Icon: House,
-    name: "Home",
-    component: HomeStack,
-  },
-  {
-    Icon: User,
-    name: "Profile",
-    component: ProfileStack,
-  },
+  { Icon: MapPin, name: "Map", component: MapStack },
+  { Icon: House, name: "Home", component: HomeStack },
+  { Icon: User, name: "Profile", component: ProfileStack },
 ];
 
 const BottomNavigator = () => {
   const BottomTabNavigator = createBottomTabNavigator();
 
-  const screen = ({ Icon, name, component }) => {
-    return (
-      <BottomTabNavigator.Screen
-        options={{
-          tabBarShowLabel: true,
-          gestureEnabled: false,
-          unmountOnBlur: true,
-          headerShown: false,
-          // 👇 color comes from screenOptions (active/inactive)
-          tabBarIcon: ({ color }) => <Icon size={30} color={color} />,
-        }}
-        name={name}
-        component={component}
-      />
-    );
-  };
+  const screen = ({ Icon, name, component }) => (
+    <BottomTabNavigator.Screen
+      options={{
+        tabBarShowLabel: true,
+        gestureEnabled: false,
+        unmountOnBlur: true,
+        headerShown: false,
+        tabBarIcon: ({ color }) => <Icon size={30} color={color} />,
+      }}
+      name={name}
+      component={component}
+    />
+  );
 
   return (
     <BottomTabNavigator.Navigator
@@ -52,10 +36,10 @@ const BottomNavigator = () => {
         </View>
       )}
       screenOptions={{
-        tabBarActiveTintColor: "#a9cdeb",   // active light blue
-        tabBarInactiveTintColor: "#ffffff", // inactive white
+        tabBarActiveTintColor: "#a9cdeb",
+        tabBarInactiveTintColor: "#ffffff",
         tabBarStyle: {
-          backgroundColor: "#181d45",       // dark blue background
+          backgroundColor: "#181d45",
           borderTopWidth: 0,
           elevation: 0,
           paddingTop: 12,
@@ -67,7 +51,7 @@ const BottomNavigator = () => {
         },
       }}
     >
-      {tabs.map((args, index) => screen(args))}
+      {tabs.map((args) => screen(args))}
     </BottomTabNavigator.Navigator>
   );
 };

@@ -5,7 +5,7 @@ import styles from "../styles/ChoosenCarPage.styles";
 
 const locations = ["Copenhagen", "Aarhus", "Odense"];
 
-function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }): JSX.Element {
+function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) {
   const { car, range: initialRange, location: initialLocation } = route.params;
 
   const [pickup, setPickup] = useState(initialLocation || "");
@@ -49,7 +49,7 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }):
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.backButton} onPress={() => navigation.navigate("RentACar")}>
+      <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
 
@@ -73,19 +73,12 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }):
 
       <Pressable style={styles.input} onPress={() => setCalendarVisible(true)}>
         <Text style={range?.start ? styles.inputText : styles.placeholderText}>
-          {range?.start
-            ? range.end
-              ? `${range.start} → ${range.end}`
-              : range.start
-            : "Select rental dates"}
+          {range?.start ? (range.end ? `${range.start} → ${range.end}` : range.start) : "Select rental dates"}
         </Text>
       </Pressable>
 
       <Pressable
-        style={({ pressed }) => [
-          styles.rentButton,
-          pressed && styles.rentButtonPressed,
-        ]}
+        style={({ pressed }) => [styles.rentButton, pressed && styles.rentButtonPressed]}
         onPress={() =>
           navigation.navigate("ConfirmRentalPage", {
             car,
@@ -96,20 +89,14 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }):
         }
       >
         {({ pressed }) => (
-          <Text style={pressed ? styles.rentButtonTextPressed : styles.rentButtonText}>
-            Rent this car now
-          </Text>
+          <Text style={pressed ? styles.rentButtonTextPressed : styles.rentButtonText}>Rent this car now</Text>
         )}
       </Pressable>
 
       <Modal visible={calendarVisible} transparent animationType="slide">
         <Pressable style={styles.modalOverlay} onPress={() => setCalendarVisible(false)}>
           <View style={styles.calendarModalContent}>
-            <Calendar
-              onDayPress={onDayPress}
-              markingType="period"
-              markedDates={getMarkedDates()}
-            />
+            <Calendar onDayPress={onDayPress} markingType="period" markedDates={getMarkedDates()} />
           </View>
         </Pressable>
       </Modal>

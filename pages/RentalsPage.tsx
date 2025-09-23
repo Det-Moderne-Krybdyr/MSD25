@@ -18,22 +18,13 @@ const RentalCard = ({ car, dates }: { car: string; dates: string }) => (
   <View style={styles.card}>
     <Text style={styles.cardTitle}>{car}</Text>
     <Text style={styles.cardDates}>{dates}</Text>
-    <Pressable
-      style={({ pressed }) => [
-        styles.detailsButton,
-        pressed && styles.detailsButtonPressed,
-      ]}
-    >
-      {({ pressed }) => (
-        <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>
-          View Details
-        </Text>
-      )}
+    <Pressable style={({ pressed }) => [styles.detailsButton, pressed && styles.detailsButtonPressed]}>
+      {({ pressed }) => <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>View Details</Text>}
     </Pressable>
   </View>
 );
 
-function RentalsPage(): JSX.Element {
+function RentalsPage() {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.sectionLabel}>Upcoming Rentals</Text>

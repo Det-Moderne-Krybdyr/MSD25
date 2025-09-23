@@ -7,16 +7,12 @@ const mockUser = {
   country: "Denmark",
 };
 
-function ProfilePage(): JSX.Element {
+function ProfilePage() {
   const [pressed, setPressed] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <Image source={require("../assets/logo.png")} style={styles.logo} resizeMode="contain" />
 
       <View style={styles.infoBox}>
         <Text style={styles.label}>Name</Text>
@@ -29,17 +25,10 @@ function ProfilePage(): JSX.Element {
       </View>
 
       <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          pressed ? styles.buttonPressed : null,
-        ]}
+        style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
         onPress={() => console.log("Edit Profile pressed")}
       >
-        {({ pressed }) => (
-          <Text style={pressed ? styles.buttonTextPressed : styles.buttonText}>
-            Edit Profile
-          </Text>
-        )}
+        {({ pressed }) => <Text style={pressed ? styles.buttonTextPressed : styles.buttonText}>Edit Profile</Text>}
       </Pressable>
     </View>
   );
