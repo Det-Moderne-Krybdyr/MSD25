@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
 
 const RentalsPage = () => {
     const [user, setUser] = useState<{ id: number; name: string; email: string } | null>(null);
@@ -10,21 +9,7 @@ const RentalsPage = () => {
             .then(setUser)
             .catch(console.error);
     }, []);
-
-    return (
-        <View style={styles.container}>
-            <Text>Rentals</Text>
-            {user ? (
-                <Text>{user.name} ({user.email})</Text>
-            ) : (
-                <Text>Loading user...</Text>
-            )}
-        </View>
-    );
 };
 
-const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: "center", alignItems: "center" },
-});
 
 export default RentalsPage;
