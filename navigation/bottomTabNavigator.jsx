@@ -36,8 +36,8 @@ const BottomNavigator = () => {
         </View>
       )}
       screenOptions={{
-        tabBarActiveTintColor: "#a9cdeb",
-        tabBarInactiveTintColor: "#ffffff",
+        tabBarActiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#a9cdeb",
         tabBarStyle: {
           backgroundColor: "#181d45",
           borderTopWidth: 0,

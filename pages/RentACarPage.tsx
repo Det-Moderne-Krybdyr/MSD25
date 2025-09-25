@@ -12,7 +12,7 @@ const carsData = [
 
 const locations = ["Copenhagen", "Aarhus", "Odense", "Aalborg"];
 
-function RentACarPage({ navigation }) {
+function RentACarPage({ navigation }: any) {
   const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
@@ -79,7 +79,7 @@ function RentACarPage({ navigation }) {
               <View style={styles.cardFooter}>
                 <Text style={styles.carName}>{item.name}</Text>
                 <Pressable
-                  style={({ pressed }) => [styles.detailsButton, pressed && styles.detailsButtonPressed]}
+                  style={styles.detailsButton}
                   onPress={() => onViewDetails(item)}
                 >
                   {({ pressed }) => (
