@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
-    "migrate:dev": "prisma migrate dev",
+    "migrate:dev": "prisma migrate dev --schema=src/prisma/schema.prisma",
     "migrate:deploy": "prisma migrate deploy",
     "seed": "ts-node prisma/seed.ts",
     "generate": "prisma generate"
