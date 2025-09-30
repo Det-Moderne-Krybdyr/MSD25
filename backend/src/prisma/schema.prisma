@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id       Int            @id @default(autoincrement())
-  name     String
-  email    String         @unique
-  password String         @default("")
-  sessions User_Session[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  email        String         @unique
+  password     String         @default("")
+  sessions     User_Session[]
+  reservations Reservation[]
 }
 
 model User_Session {
@@ -27,4 +28,26 @@ model Car_Model {
   name  String
   image String
   price String
+  cars  Car[]
+}
+
+model Car {
+  id               Int           @id @default(autoincrement())
+  car_model_id     Int
+  model            Car_Model     @relation(fields: [car_model_id], references: [id])
+  reservations     Reservation[]
+  current_location String
+}
+
+model Reservation {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  user             User     @relation(fields: [user_id], references: [id])
+  car_id           Int
+  car              Car      @relation(fields: [car_id], references: [id])
+  start_date       DateTime
+  end_date         DateTime
+  pickup_location  String
+  dropoff_location String
+  price            Decimal
 }
