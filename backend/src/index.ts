@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import carRoutes from "./routes/carRoutes";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes)
+app.use("/cars", carRoutes)
 
 const PORT: number = parseInt(process.env.PORT || "3000", 10);
 

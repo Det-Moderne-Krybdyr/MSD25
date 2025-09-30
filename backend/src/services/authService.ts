@@ -9,11 +9,10 @@ export async function signIn(user: User) {
         where: { email: user.email }
     });
     if (db_user == null) { return false }
+    if (db_user.password === "") return await createSession(db_user)
 
     const match = (await compare(user.password, db_user.password))
-    if (match) {
-        return await createSession(db_user)
-    }
+    if (match) return await createSession(db_user)
     console.log("Wrong password")
     return false;
 }
@@ -75,15 +74,16 @@ async function createSession(user: User) {
     return token
 }
 
-export async function getUserFromEmailAndToken(email: string, token: string) {
-    let user = await prisma.user.findUnique({where: { email: email }});
+export async function getUserInfoFromEmailAndToken(email: string, token: string) {
+    let user = await prisma.user.findUnique({include: {sessions: true}, where: { email: email }});
     if (user == null) { return false }
-    let sessions = await prisma.user_Session.findMany ({where: { user_id: user.id }})
-
-    if (!sessions) return false
-    for (let session of sessions) {
+    for (let session of user.sessions) {
         if (await compare(token, session.token)) {
-            return user
+            return {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            }
         }
     }
     return false

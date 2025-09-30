@@ -9,7 +9,8 @@
     "migrate:deploy": "prisma migrate deploy",
     "seed": "ts-node src/prisma/seed.ts",
     "generate": "prisma generate --schema=src/prisma/schema.prisma",
-    "clear-db": "prisma db push --force-reset --schema=src/prisma/schema.prisma"
+    "clear-db": "prisma db push --force-reset --schema=src/prisma/schema.prisma",
+    "reset-db": "prisma migrate reset --schema=src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",

@@ -23,31 +23,43 @@ model User_Session {
   token   String @unique
 }
 
+model Location {
+  id                   Int           @id @default(autoincrement())
+  zip_code             String
+  name                 String
+  reservation_pickups  Reservation[] @relation(name: "pickup")
+  reservation_dropoffs Reservation[] @relation(name: "dropoff")
+  cars                 Car[]
+}
+
 model Car_Model {
-  id    Int    @id @default(autoincrement())
+  id    Int     @id @default(autoincrement())
   name  String
   image String
-  price String
+  price Decimal
   cars  Car[]
 }
 
 model Car {
-  id               Int           @id @default(autoincrement())
-  car_model_id     Int
-  model            Car_Model     @relation(fields: [car_model_id], references: [id])
-  reservations     Reservation[]
-  current_location String
+  id                  Int           @id @default(autoincrement())
+  car_model_id        Int
+  model               Car_Model     @relation(fields: [car_model_id], references: [id])
+  reservations        Reservation[]
+  current_location_id Int
+  current_location    Location      @relation(fields: [current_location_id], references: [id])
 }
 
 model Reservation {
-  id               Int      @id @default(autoincrement())
-  user_id          Int
-  user             User     @relation(fields: [user_id], references: [id])
-  car_id           Int
-  car              Car      @relation(fields: [car_id], references: [id])
-  start_date       DateTime
-  end_date         DateTime
-  pickup_location  String
-  dropoff_location String
-  price            Decimal
+  id                  Int      @id @default(autoincrement())
+  user_id             Int
+  user                User     @relation(fields: [user_id], references: [id])
+  car_id              Int
+  car                 Car      @relation(fields: [car_id], references: [id])
+  start_date          DateTime
+  end_date            DateTime
+  pickup_location_id  Int
+  dropoff_location_id Int
+  pickup_location     Location @relation(fields: [pickup_location_id], references: [id], name: "pickup")
+  dropoff_location    Location @relation(fields: [dropoff_location_id], references: [id], name: "dropoff")
+  price               Decimal
 }

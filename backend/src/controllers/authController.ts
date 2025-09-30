@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {listUsers} from "../services/userServices";
-import {getUserFromEmailAndToken, signIn, signOut, signUp, validateToken} from "../services/authService"
+import {getUserInfoFromEmailAndToken, signIn, signOut, signUp, validateToken} from "../services/authService"
 
 export async function PostSignUp(
     _req: Request,
@@ -60,7 +60,7 @@ export async function GetUserFromEmailAndToken(
     next: NextFunction
 ) {
     try {
-        const user = await getUserFromEmailAndToken(_req.body.email, _req.body.token);
+        const user = await getUserInfoFromEmailAndToken(_req.body.email, _req.body.token);
         res.json(user);
     } catch (err) {
         next(err);
