@@ -10,7 +10,7 @@ From root: docker-compose up
 cd backend -> npm run dev
 
 ## Seed the database from the Seed.ts file
-npm seed
+npm run seed
 
 ## To migrate schema into database:
 npm run migrate:dev
