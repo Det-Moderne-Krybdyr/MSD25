@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import MapPage from "../../pages/MapPage";
 
-const pages = [{ name: "Map", component: MapPage }];
+const pages = [{ name: "MapPage", component: MapPage }];
 
 const Stack = createStackNavigator();
 

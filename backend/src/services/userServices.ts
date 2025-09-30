@@ -6,6 +6,9 @@ export async function listUsers() {
       id: true,
       name: true,
       email: true,
+      password: true,
     },
   });
 }
+
+

@@ -3,7 +3,7 @@ import ProfilePage from "../../pages/ProfilePage";
 import EditProfilePage from "../../pages/EditProfilePage";
 
 const pages = [
-  { name: "Profile", component: ProfilePage },
+  { name: "ProfilePage", component: ProfilePage },
   { name: "EditProfile", component: EditProfilePage },
 ];
 

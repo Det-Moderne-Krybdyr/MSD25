@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import styles from "../styles/ProfilePage.styles";
+import {AuthContext, getUser} from "../services/authService";
+import {getValueForAsync} from "../navigation/rootNavigator";
 
-function ProfilePage({ navigation, route }: { navigation: any; route: any }): JSX.Element {
+function ProfilePage({ navigation, route }: { navigation: any; route: any }): React.JSX.Element {
   const [user, setUser] = useState({
     name: "John Doe",
     email: "johndoe@email.com",
@@ -11,10 +13,20 @@ function ProfilePage({ navigation, route }: { navigation: any; route: any }): JS
     password: "********",
   });
 
+  const authContext = useContext(AuthContext);
+
   useEffect(() => {
-    if (route.params?.updatedUser) {
-      setUser(route.params.updatedUser);
-    }
+
+      const fetchData = async () => {
+          const db_user = await getUser()
+
+          return {...user, email: db_user.email, name: db_user.name}
+      }
+      if (route.params?.updatedUser) {
+          setUser(route.params.updatedUser);
+      }
+
+      fetchData().then(data => setUser(data))
   }, [route.params?.updatedUser]);
 
   return (
@@ -48,7 +60,23 @@ function ProfilePage({ navigation, route }: { navigation: any; route: any }): JS
           </Text>
         )}
       </Pressable>
+
+        <Pressable
+            style={({ pressed }) => [
+                styles.button,
+                pressed ? styles.buttonPressed : null,
+            ]}
+            onPress={() => authContext.signOut()}
+        >
+            {({ pressed }) => (
+                <Text style={pressed ? styles.buttonTextPressed : styles.buttonText}>
+                    Sign Out
+                </Text>
+            )}
+        </Pressable>
     </View>
+
+
   );
 }
 
