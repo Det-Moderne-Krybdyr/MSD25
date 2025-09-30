@@ -137,7 +137,7 @@ const MainNavigator = () => {
             },
             signUp: async (data) => {
                 console.log("user" + JSON.stringify(data));
-                let token = signup(data);
+                let token = await signup(data);
                 if (!token) return
                 await saveInStorageAsync('user_token', token.toString())
                 await saveInStorageAsync('email', data.email)
