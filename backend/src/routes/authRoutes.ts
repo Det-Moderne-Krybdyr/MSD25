@@ -2,7 +2,7 @@ import { Router } from "express";
 import  "../services/authService"
 import {
     GetUserFromEmailAndToken,
-    postSignIn,
+    PostSignIn,
     PostSignOut,
     PostSignUp,
     PostValidate
@@ -10,7 +10,7 @@ import {
 
 const router = Router()
 
-router.post("/signin", postSignIn)
+router.post("/signin", PostSignIn)
 router.post("/signout", PostSignOut)
 router.post("/user", PostSignUp)
 router.post("/validate", PostValidate)

@@ -15,7 +15,7 @@ export async function PostSignUp(
     }
 }
 
-export async function postSignIn(
+export async function PostSignIn(
     _req: Request,
     res: Response,
     next: NextFunction
