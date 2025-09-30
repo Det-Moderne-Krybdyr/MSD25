@@ -1,35 +1,50 @@
 import {User, User_Session} from "@prisma/client";
 import {prisma} from "../prisma/prisma";
-import {compare} from "bcryptjs";
-import {hash, randomUUID} from "node:crypto";
+import {compare, hash} from "bcryptjs";
+import {randomUUID} from "node:crypto";
 
 export async function signIn(user: User) {
+    console.log("Signing in: " + JSON.stringify(user));
     const db_user = await prisma.user.findUnique({
         where: { email: user.email }
     });
-    if (!db_user) { return false }
+    if (db_user == null) { return false }
 
-    if (await compare(user.password, db_user.password)) {
-        return await createSession(user)
+    const match = (await compare(user.password, db_user.password))
+    if (match) {
+        return await createSession(db_user)
     }
+    console.log("Wrong password")
     return false;
 }
 
-export async function validateToken(session: User_Session) {
-    let sessions = await prisma.user_Session.findMany ({where: { token: session.token }})
+export async function validateToken(email: string, token: string) {
+    let user = await prisma.user.findUnique({where: { email: email }});
+    if (user == null) { return false }
+    let sessions = await prisma.user_Session.findMany ({where: { user_id: user.id }})
 
     if (!sessions) return false
-    for (let _session of sessions) {
-        if (await compare(session.token, _session.token)) {
-            prisma.user.findUnique({where: { id: session.user_id }})
+    for (let session of sessions) {
+        if (await compare(token, session.token)) {
+            return true
         }
     }
     return false
 }
 
 // sign out and delete session
-export async function signOut(session: User_Session) {
-    prisma.user_Session.delete({where: {id: session.id}})
+export async function signOut(email: string, token: string) {
+    const user = await prisma.user.findUnique({where: { email: email }});
+    console.log("signing out: " + user)
+    if (user == null) { return }
+    const sessions = await prisma.user_Session.findMany({where: { user_id: user.id}});
+
+    for (let session of sessions) {
+        if (await compare(token, session.token)) {
+            prisma.user_Session.delete({where: {id: session.id}});
+        }
+    }
+
     return
 }
 
@@ -41,7 +56,7 @@ export async function signUp(user: User) {
     let new_user = await prisma.user.create({data: {
             name: user.name,
             email: user.email,
-            password: hash("sha256", user.password),
+            password: await hash(user.password, 10),
         }})
     return createSession(new_user)
 }
@@ -50,17 +65,26 @@ export async function signUp(user: User) {
 async function createSession(user: User) {
     // generate session token
     let token = randomUUID().toString()
-    let encryptedToken = hash("sha256", token)
+    let encryptedToken = await hash(token, 10)
     let session = {
         user_id: user.id,
         token: encryptedToken,
     }
     // store token
     await prisma.user_Session.create({data: session})
-
     return token
 }
 
-async function getUserFromSession(session: User_Session) {
-    return ""
+export async function getUserFromEmailAndToken(email: string, token: string) {
+    let user = await prisma.user.findUnique({where: { email: email }});
+    if (user == null) { return false }
+    let sessions = await prisma.user_Session.findMany ({where: { user_id: user.id }})
+
+    if (!sessions) return false
+    for (let session of sessions) {
+        if (await compare(token, session.token)) {
+            return user
+        }
+    }
+    return false
 }

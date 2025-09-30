@@ -14,6 +14,6 @@ router.post("/signin", postSignIn)
 router.post("/signout", PostSignOut)
 router.post("/user", PostSignUp)
 router.post("/validate", PostValidate)
-router.post("/getUser", GetUserFromEmailAndToken)
+router.post("/get/user", GetUserFromEmailAndToken)
 
 export default router

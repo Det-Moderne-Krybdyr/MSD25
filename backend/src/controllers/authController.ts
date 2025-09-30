@@ -1,8 +1,8 @@
 import {NextFunction, Request, Response} from "express";
 import {listUsers} from "../services/userServices";
-import {signIn, signOut, signUp, validateToken} from "../services/authService"
+import {getUserFromEmailAndToken, signIn, signOut, signUp, validateToken} from "../services/authService"
 
-export async function postSignUp(
+export async function PostSignUp(
     _req: Request,
     res: Response,
     next: NextFunction
@@ -28,27 +28,40 @@ export async function postSignIn(
     }
 }
 
-export async function postSignOut(
+export async function PostSignOut(
     _req: Request,
     res: Response,
     next: NextFunction
 ) {
     try {
-        await signOut(_req.body);
+        await signOut(_req.body.email, _req.body.token);
         res.json({});
     } catch (err) {
         next(err);
     }
 }
 
-export async function postValidate(
+export async function PostValidate(
     _req: Request,
     res: Response,
     next: NextFunction
 ) {
     try {
-        const isValid = await validateToken(_req.body);
+        const isValid = await validateToken(_req.body.email, _req.body.token);
         res.json(isValid);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export async function GetUserFromEmailAndToken(
+    _req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const user = await getUserFromEmailAndToken(_req.body.email, _req.body.token);
+        res.json(user);
     } catch (err) {
         next(err);
     }
