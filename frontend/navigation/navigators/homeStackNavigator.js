@@ -10,7 +10,7 @@ import RentalConfirmedPage from "../../pages/RentalConfirmedPage";
 import RentalDetailsPage from "../../pages/RentalDetailsPage";
 
 const pages = [
-  { name: "Home", component: HomePage },
+  { name: "HomePage", component: HomePage },
   { name: "AboutUs", component: AboutUsPage },
   { name: "Rentals", component: RentalsPage },
   { name: "RentACar", component: RentACarPage },

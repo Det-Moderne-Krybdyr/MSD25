@@ -2,7 +2,8 @@ import React, {JSX, useEffect, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import styles from "../styles/RentalsPage.styles";
 import {getValueForAsync} from "../navigation/rootNavigator"
-import {getReservationsByUser} from "../services/carService";
+import {getCurrentReservationsByUser, getPreviousReservationsByUser} from "../services/carService";
+import {sendWithAuth} from "../services/service";
 
 const formatDates = (start: number, end: number): string => {
     return new Date(start).toDateString() + " → " + new Date(end).toDateString()
@@ -31,26 +32,30 @@ const RentalCard = ({ rental, navigation }: any) => {
 };
 
 function RentalsPage({ navigation }: any): JSX.Element {
-    const [rentals, setRentals] = useState([])
+    const [previousRentals, setPreviousRentals] = useState([])
+    const [currentRentals, setCurrentRentals] = useState([])
 
     useEffect(() => {
-        const fetchData = async() => {
-            const email = await getValueForAsync("email")
-            const token = await getValueForAsync("user_token")
-
-            return getReservationsByUser(email!, token!)
+        const fetchPreviousRentals = async() => {
+            return sendWithAuth(getPreviousReservationsByUser)
+        }
+        const fetchCurrentRentals = async() => {
+            return sendWithAuth(getCurrentReservationsByUser)
         }
 
-        fetchData().then((data: any) => {
-            setRentals(data)
-        })
+        fetchPreviousRentals().then(setPreviousRentals)
+        fetchCurrentRentals().then(setCurrentRentals)
     },[])
 
 
   return (
     <ScrollView style={styles.container}>
+        <Text style={styles.sectionLabel}>Current Rentals</Text>
+        {currentRentals.map((rental: any) => (
+            <RentalCard key={rental.id} rental={rental} navigation={navigation} />
+        ))}
       <Text style={styles.sectionLabel}>Previous Rentals</Text>
-      {rentals.map((rental: any) => (
+      {previousRentals.map((rental: any) => (
         <RentalCard key={rental.id} rental={rental} navigation={navigation} />
       ))}
     </ScrollView>

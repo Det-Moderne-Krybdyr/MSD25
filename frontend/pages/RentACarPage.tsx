@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, FlatList, Image, Pressable, Modal, TouchableOpacity } from "react-native";
-import { Calendar } from "react-native-calendars";
+import {Calendar, DateData} from "react-native-calendars";
 import { ChevronDown, Calendar as CalendarIcon } from "lucide-react-native";
 import styles from "../styles/RentACarPage.styles";
+import {getValueForAsync} from "../navigation/rootNavigator";
+import {getCarsByLocationAndDates, getLocations, getPreviousReservationsByUser} from "../services/carService";
+import {sendWithAuth} from "../services/service";
+import {carImages} from "../assets/assets";
+import {MarkedDates} from "react-native-calendars/src/types";
 
 const carsData = [
   { id: "1", name: "Audi A3 Sportback", image: require("../assets/audi.png"), price: "100 kr./dag" },
@@ -10,28 +15,45 @@ const carsData = [
   { id: "3", name: "Hyundai i20", image: require("../assets/hyundai.png"), price: "80 kr./dag" },
 ];
 
-const locations = ["Copenhagen", "Aarhus", "Odense", "Aalborg"];
-
 function RentACarPage({ navigation }: any) {
   const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<any | null>(null);
   const [range, setRange] = useState<{ start: string | null; end: string | null }>({ start: null, end: null });
 
-  const handleDayPress = (day: any) => {
+  const [locations, setLocations] = useState<any[]>([]);
+  const [carModels, setCarModels] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchLocations = async() => {
+      return sendWithAuth(getLocations)
+    }
+    fetchLocations().then(setLocations)
+
+  },[])
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      if (selectedLocation == null || !range.start || !range.end) return
+      return sendWithAuth(getCarsByLocationAndDates, selectedLocation.id, new Date(range.start), new Date(range.end))
+    }
+    fetchCars().then(setCarModels)
+  }, [selectedLocation, range])
+
+  const handleDayPress = (date: DateData) => {
     if (!range.start || (range.start && range.end)) {
-      setRange({ start: day.dateString, end: null });
+      setRange({ start: date.dateString, end: null });
     } else if (range.start && !range.end) {
-      if (day.dateString > range.start) {
-        setRange({ start: range.start, end: day.dateString });
+      if (date.dateString > range.start) {
+        setRange({ start: range.start, end: date.dateString });
         setCalendarVisible(false);
       } else {
-        setRange({ start: day.dateString, end: null });
+        setRange({ start: date.dateString, end: null });
       }
     }
   };
 
-  const getMarkedDates = () => {
+  const getMarkedDates = ():MarkedDates => {
     if (!range.start) return {};
     if (!range.end) return { [range.start]: { startingDay: true, color: "#a9cdeb", textColor: "#181d45" } };
     let dates: any = {};
@@ -50,8 +72,8 @@ function RentACarPage({ navigation }: any) {
     return dates;
   };
 
-  const onViewDetails = (car: any) => {
-    navigation.navigate("ChoosenCarPage", { car, location: selectedLocation, range });
+  const onViewDetails = (carModel: any) => {
+    navigation.navigate("ChoosenCarPage", { carModel, location: selectedLocation, range });
   };
 
   return (
@@ -59,7 +81,7 @@ function RentACarPage({ navigation }: any) {
       <View style={styles.topControls}>
         <TouchableOpacity style={styles.pickerButton} onPress={() => setLocationModalVisible(true)}>
           <Text style={[styles.pickerText, !selectedLocation && styles.placeholderText]}>
-            {selectedLocation || "Choose pickup location"}
+            {selectedLocation?.name || "Choose pickup location"}
           </Text>
           <ChevronDown size={20} color="#181d45" />
         </TouchableOpacity>
@@ -67,46 +89,54 @@ function RentACarPage({ navigation }: any) {
           <CalendarIcon size={20} color="#181d45" />
         </TouchableOpacity>
       </View>
+      {selectedLocation && range.start && range.end ?
+          <FlatList
+              data={carModels}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={styles.listContent}
+              renderItem={({ item: carModel }) => {
+                if (carModel.cars.length == 0) return(<View/>)
+                return (
+                    <View style={styles.shadowCard}>
+                      <View style={styles.cardInner}>
+                        <Image source={carImages(carModel.image)} style={styles.carImage}
+                               resizeMode="contain"/>
+                        <View style={styles.cardFooter}>
+                          <View>
+                            <Text style={styles.carName}>{carModel.name}</Text>
+                            <Text style={styles.modalItemText}>{carModel.cars.length} Available</Text>
+                          </View>
+                          <Pressable
+                              style={styles.detailsButton}
+                              onPress={() => onViewDetails(carModel)}
+                          >
+                            {({pressed}) => (
+                                <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>
+                                  View Details
+                                </Text>
+                            )}
+                          </Pressable>
+                        </View>
+                      </View>
+                    </View>
+                )
+              }}
+          /> : <View style={styles.topControls}><Text style={styles.placeholderText}>Select dates and a location to see available models</Text></View>}
 
-      <FlatList
-        data={carsData}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item }) => (
-          <View style={styles.shadowCard}>
-            <View style={styles.cardInner}>
-              <Image source={item.image} style={styles.carImage} resizeMode="contain" />
-              <View style={styles.cardFooter}>
-                <Text style={styles.carName}>{item.name}</Text>
-                <Pressable
-                  style={styles.detailsButton}
-                  onPress={() => onViewDetails(item)}
-                >
-                  {({ pressed }) => (
-                    <Text style={pressed ? styles.detailsButtonTextPressed : styles.detailsButtonText}>
-                      View Details
-                    </Text>
-                  )}
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        )}
-      />
 
       <Modal transparent visible={locationModalVisible} animationType="fade">
         <TouchableOpacity style={styles.modalOverlay} onPress={() => setLocationModalVisible(false)}>
           <View style={styles.modalContent}>
-            {locations.map((loc) => (
+            {locations.map((loc: any) => (
               <TouchableOpacity
-                key={loc}
+                key={loc.name}
                 style={styles.modalItem}
                 onPress={() => {
                   setSelectedLocation(loc);
                   setLocationModalVisible(false);
                 }}
               >
-                <Text style={styles.modalItemText}>{loc}</Text>
+                <Text style={styles.modalItemText}>{loc.name}</Text>
               </TouchableOpacity>
             ))}
           </View>
