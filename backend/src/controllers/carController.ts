@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from "express";
 import {validateToken} from "../services/authService";
 import {
     getCarsByLocationAndDates,
-    getCurrentReservationsByUser,
+    getCurrentReservationsByUser, getFutureReservationsByUser,
     getLocations,
     getPreviousReservationsByUser,
     listCars, postReservation
@@ -28,6 +28,19 @@ export async function GetPreviousReservationsByUser(
 ) {
     try {
         const reservations = await getPreviousReservationsByUser(_req.body.email, _req.body.token);
+        res.json(reservations);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export async function GetFutureReservationsByUser(
+    _req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const reservations = await getFutureReservationsByUser(_req.body.email, _req.body.token);
         res.json(reservations);
     } catch (err) {
         next(err);

@@ -2,7 +2,11 @@ import React, {JSX, useEffect, useState} from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import styles from "../styles/RentalsPage.styles";
 import {getValueForAsync} from "../navigation/rootNavigator"
-import {getCurrentReservationsByUser, getPreviousReservationsByUser} from "../services/carService";
+import {
+    getCurrentReservationsByUser,
+    getFutureReservationsByUser,
+    getPreviousReservationsByUser
+} from "../services/carService";
 import {sendWithAuth} from "../services/service";
 
 const formatDates = (start: number, end: number): string => {
@@ -34,6 +38,7 @@ const RentalCard = ({ rental, navigation }: any) => {
 function RentalsPage({ navigation }: any): JSX.Element {
     const [previousRentals, setPreviousRentals] = useState([])
     const [currentRentals, setCurrentRentals] = useState([])
+    const [futureRentals, setFutureRentals] = useState([])
 
     useEffect(() => {
         const fetchPreviousRentals = async() => {
@@ -42,22 +47,31 @@ function RentalsPage({ navigation }: any): JSX.Element {
         const fetchCurrentRentals = async() => {
             return sendWithAuth(getCurrentReservationsByUser)
         }
+        const fetchFutureRentals = async() => {
+            return sendWithAuth(getFutureReservationsByUser)
+        }
 
         fetchPreviousRentals().then(setPreviousRentals)
         fetchCurrentRentals().then(setCurrentRentals)
+        fetchFutureRentals().then(setFutureRentals)
     },[])
 
 
   return (
     <ScrollView style={styles.container}>
-        <Text style={styles.sectionLabel}>Current Rentals</Text>
+        {currentRentals.length > 0 ? <Text style={styles.sectionLabel}>Current Rentals</Text> : <></>}
         {currentRentals.map((rental: any) => (
             <RentalCard key={rental.id} rental={rental} navigation={navigation} />
         ))}
-      <Text style={styles.sectionLabel}>Previous Rentals</Text>
+        {futureRentals.length > 0 ? <Text style={styles.sectionLabel}>Upcoming Rentals</Text> : <></>}
+        {futureRentals.map((rental: any) => (
+            <RentalCard key={rental.id} rental={rental} navigation={navigation} />
+        ))}
+        {previousRentals.length > 0 ? <Text style={styles.sectionLabel}>Previous Rentals</Text> : <></>}
       {previousRentals.map((rental: any) => (
         <RentalCard key={rental.id} rental={rental} navigation={navigation} />
       ))}
+        {previousRentals.length == 0 && currentRentals.length == 0 && futureRentals.length == 0 ? <Text style={{...styles.detailsButtonText, textAlign: "center"}}>Rent a car from the home page to view here!</Text>: <></>}
     </ScrollView>
   );
 }

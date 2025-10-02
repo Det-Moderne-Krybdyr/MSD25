@@ -33,6 +33,7 @@ export const getPreviousReservationsByUser = async (email: string, token: string
 
 export const getCurrentReservationsByUser = async (email: string, token: string) => {
     const user = await getUserInfoFromEmailAndToken(email, token)
+    const now = new Date()
     if (!user) return
     return prisma.reservation.findMany({
         orderBy: [
@@ -47,8 +48,31 @@ export const getCurrentReservationsByUser = async (email: string, token: string)
             user: {select: {name: true, email: true}}},
         where: {
             user_id: user.id,
-            // end date is in the future
-            end_date: {gte: new Date()}
+            // start date has passed, but end date is in the future
+            AND: [{end_date: {gte: now}}, {start_date: {lte: now}}],
+        }
+    })
+}
+
+export const getFutureReservationsByUser = async (email: string, token: string) => {
+    const user = await getUserInfoFromEmailAndToken(email, token)
+    const now = new Date()
+    if (!user) return
+    return prisma.reservation.findMany({
+        orderBy: [
+            {
+                end_date: 'desc',
+            },
+        ],
+        include: {
+            car: { include: {model: true}},
+            pickup_location: true,
+            dropoff_location: true,
+            user: {select: {name: true, email: true}}},
+        where: {
+            user_id: user.id,
+            // start date is in the future
+            AND: [{start_date: {gte: now}}],
         }
     })
 }

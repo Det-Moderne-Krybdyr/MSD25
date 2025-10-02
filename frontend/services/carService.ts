@@ -22,6 +22,16 @@ export const getCurrentReservationsByUser = async (email: string, token: string)
     return res.data
 }
 
+export const getFutureReservationsByUser = async (email: string, token: string) => {
+    const body = {
+        email: email,
+        token: token
+    }
+
+    let res = await axios.post(API_URL + '/reservations/by/user/future', body)
+    return res.data
+}
+
 export const getLocations = async (email: string, token: string) => {
     const body = {
         email: email,
