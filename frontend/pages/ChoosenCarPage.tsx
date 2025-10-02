@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, Image, Pressable, Modal, FlatList } from "react-native";
 import { Calendar } from "react-native-calendars";
 import styles from "../styles/ChoosenCarPage.styles";
+import {sendWithAuth} from "../services/service";
+import {getLocations} from "../services/carService";
+import {carImages} from "../assets/assets";
 
-const locations = ["Copenhagen", "Aarhus", "Odense"];
+
 
 function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) {
-  const { car, range: initialRange, location: initialLocation } = route.params;
+  const { carModel: carModel, range: initialRange, location: initialLocation } = route.params;
 
-  const [pickup, setPickup] = useState(initialLocation || "");
-  const [dropoff, setDropoff] = useState("");
+  const [pickup, setPickup] = useState<any | null>(initialLocation);
+  const [dropoff, setDropoff] = useState<any | null>();
   const [range, setRange] = useState(initialRange || {});
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [locationModalVisible, setLocationModalVisible] = useState<null | "pickup" | "dropoff">(null);
+
+    useEffect(() => {
+        const fetchLocations = async() => {
+            return sendWithAuth(getLocations)
+        }
+        fetchLocations().then(setLocations)
+
+    },[])
+  const [locations, setLocations] = useState<any[]>([]);
 
   const onDayPress = (day: any) => {
     if (!range.start || (range.start && range.end)) {
@@ -55,21 +67,21 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
         <Text style={styles.backButtonText}>← Back</Text>
       </Pressable>
 
-      <Image source={car.image} style={styles.carImage} resizeMode="contain" />
+      <Image source={carImages(carModel.image)} style={styles.carImage} resizeMode="contain" />
 
       <View style={styles.input}>
-        <Text style={styles.inputText}>{car.name}</Text>
+        <Text style={styles.inputText}>{carModel.name}</Text>
       </View>
 
       <Pressable style={styles.input} onPress={() => setLocationModalVisible("pickup")}>
         <Text style={pickup ? styles.inputText : styles.placeholderText}>
-          {pickup || "Pickup destination"}
+          {pickup.name || "Pickup destination"}
         </Text>
       </Pressable>
 
       <Pressable style={styles.input} onPress={() => setLocationModalVisible("dropoff")}>
         <Text style={dropoff ? styles.inputText : styles.placeholderText}>
-          {dropoff || "Drop-off destination"}
+          {dropoff?.name || "Drop-off destination"}
         </Text>
       </Pressable>
 
@@ -79,7 +91,7 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
         </Text>
       </Pressable>
       <View style={styles.input}>
-        <Text style={styles.inputText}>{car.price}</Text>
+        <Text style={styles.inputText}>{carModel.price}€ per day</Text>
       </View>
 
       <Pressable
@@ -91,7 +103,7 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
         disabled={!isFormComplete}
         onPress={() =>
           navigation.navigate("ConfirmRentalPage", {
-            car,
+            car: carModel,
             pickup,
             dropoff,
             range,
@@ -119,7 +131,7 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
           <View style={styles.modalContent}>
             <FlatList
               data={locations}
-              keyExtractor={(item) => item}
+              keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <Pressable
                   style={styles.modalItem}
@@ -129,7 +141,7 @@ function ChoosenCarPage({ route, navigation }: { route: any; navigation: any }) 
                     setLocationModalVisible(null);
                   }}
                 >
-                  <Text style={styles.modalItemText}>{item}</Text>
+                  <Text style={styles.modalItemText}>{item.name}</Text>
                 </Pressable>
               )}
             />

@@ -13,7 +13,7 @@ function EditProfilePage({ navigation, route }: { navigation: any; route: any })
 
   const handleSave = () => {
     const updatedUser = { name, email, birthdate, country, password };
-    navigation.navigate("Profile", { updatedUser });
+    navigation.navigate("ProfilePage", { updatedUser });
   };
 
   return (

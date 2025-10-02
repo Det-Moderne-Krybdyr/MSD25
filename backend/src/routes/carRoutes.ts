@@ -1,9 +1,18 @@
 import {Router} from "express";
-import {GetCars, GetReservationsByUser} from "../controllers/carController";
+import {
+    GetCarsByLocation,
+    GetCurrentReservationsByUser, GetFutureReservationsByUser,
+    GetLocations,
+    GetPreviousReservationsByUser, PostReservation
+} from "../controllers/carController";
 
 const router = Router()
 
-router.get("/", GetCars)
-router.post("/reservations/by/user", GetReservationsByUser)
+router.post("/reservations/by/user/previous", GetPreviousReservationsByUser)
+router.post("/reservations/by/user/future", GetFutureReservationsByUser)
+router.post("/reservations/by/user/current", GetCurrentReservationsByUser)
+router.post("/locations", GetLocations)
+router.post("/by/location", GetCarsByLocation)
+router.post("/reservation", PostReservation)
 
 export default router

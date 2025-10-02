@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, TextInput, Pressable } from "react-native";
 import Checkbox from "expo-checkbox";
 import styles from "../styles/ConfirmRentalPage.styles";
+import {sendWithAuth} from "../services/service";
+import {getLocations, postReservation} from "../services/carService";
+import {getUser} from "../services/authService";
+
+function calculatePrice(range: any, carModel: any) {
+    const days = (new Date(range.end).getTime() - new Date(range.start).getTime()) / (1000 * 60 * 60 * 24)
+    return carModel.price * days;
+}
+
 
 function ConfirmRentalPage({ route, navigation }: any) {
   const { car, name, email, pickup, dropoff, range } = route.params;
 
-  const [inputName, setInputName] = useState(name || "John Doe");
-  const [inputEmail, setInputEmail] = useState(email || "johndoe@email.com");
+  const [userInfo, setUserInfo] = useState<{name: string, email:string}>({name: "", email: ""});
   const [accepted, setAccepted] = useState(false);
 
-  const canConfirm =
-    inputName.trim() !== "" &&
-    inputEmail.trim() !== "" &&
-    accepted;
+  const canConfirm = accepted;
+
+    useEffect(() => {
+        const fetchUserInfo = async() => {
+            return sendWithAuth(getUser)
+        }
+        fetchUserInfo().then(setUserInfo)
+
+    },[])
 
   return (
     <View style={styles.container}>
@@ -28,8 +41,8 @@ function ConfirmRentalPage({ route, navigation }: any) {
         <Text style={styles.label}>Name</Text>
         <TextInput
           style={styles.input}
-          value={inputName}
-          onChangeText={setInputName}
+          value={userInfo.name}
+          onChangeText={(text: string) => setUserInfo({...userInfo, name: text})}
         />
       </View>
 
@@ -37,8 +50,8 @@ function ConfirmRentalPage({ route, navigation }: any) {
         <Text style={styles.label}>E-mail</Text>
         <TextInput
           style={styles.input}
-          value={inputEmail}
-          onChangeText={setInputEmail}
+          value={userInfo.email}
+          onChangeText={(text: string) => setUserInfo({...userInfo, email: text})}
           keyboardType="email-address"
         />
       </View>
@@ -50,25 +63,25 @@ function ConfirmRentalPage({ route, navigation }: any) {
 
       <View style={styles.inputBox}>
         <Text style={styles.label}>Pickup destination</Text>
-        <TextInput style={styles.input} value={pickup} editable={false} />
+        <TextInput style={styles.input} value={pickup.name} editable={false} />
       </View>
 
       <View style={styles.inputBox}>
         <Text style={styles.label}>Drop off destination</Text>
-        <TextInput style={styles.input} value={dropoff} editable={false} />
+        <TextInput style={styles.input} value={dropoff.name} editable={false} />
       </View>
 
       <View style={styles.inputBox}>
         <Text style={styles.label}>Dates</Text>
         <TextInput
           style={styles.input}
-          value={`${range.start} - ${range.end}`}
+          value={`${range.start} → ${range.end}`}
           editable={false}
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.label}>Car</Text>
-        <TextInput style={styles.input} value={car.price} editable={false} />
+        <Text style={styles.label}>Price</Text>
+        <TextInput style={styles.input} value={calculatePrice(range, car) + "€"} editable={false} />
       </View>
 
       <View style={styles.checkboxRow}>
@@ -95,15 +108,22 @@ function ConfirmRentalPage({ route, navigation }: any) {
           pressed && styles.confirmButtonPressed,
         ]}
         disabled={!canConfirm}
-        onPress={() =>
-          navigation.navigate("RentalConfirmedPage", {
-            name: inputName,
-            email: inputEmail,
-            car,
-            pickup,
-            dropoff,
-            range,
-          })
+        onPress={() => {
+            sendWithAuth(postReservation, pickup.id, dropoff.id, car.cars[0].id, new Date(range.start), new Date(range.end)).then((res) => {
+                if (res == "success") {
+                    navigation.navigate("RentalConfirmedPage", {
+                        name: userInfo.name,
+                        email: userInfo.email,
+                        car,
+                        pickup,
+                        dropoff,
+                        range,
+                        price: calculatePrice(range, car),
+                    })
+                }
+            })
+
+        }
         }
       >
         <Text

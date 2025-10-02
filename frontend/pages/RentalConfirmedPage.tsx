@@ -3,7 +3,7 @@ import { View, Text, Image, Pressable } from "react-native";
 import styles from "../styles/RentalConfirmedPage.styles";
 
 function RentalConfirmedPage({ route, navigation }: any) {
-  const { name, email, car, pickup, dropoff, range } = route.params;
+  const { name, email, car, pickup, dropoff, range, price } = route.params;
 
   return (
     <View style={styles.container}>
@@ -32,12 +32,12 @@ function RentalConfirmedPage({ route, navigation }: any) {
 
       <View style={styles.infoBox}>
         <Text style={styles.label}>Pickup</Text>
-        <Text style={styles.value}>{pickup}</Text>
+        <Text style={styles.value}>{pickup.name}</Text>
       </View>
 
       <View style={styles.infoBox}>
         <Text style={styles.label}>Drop-off</Text>
-        <Text style={styles.value}>{dropoff}</Text>
+        <Text style={styles.value}>{dropoff.name}</Text>
       </View>
 
       <View style={styles.infoBox}>
@@ -49,7 +49,7 @@ function RentalConfirmedPage({ route, navigation }: any) {
 
       <View style={styles.infoBox}>
         <Text style={styles.label}>Price</Text>
-        <Text style={styles.value}>{car.price}</Text>
+        <Text style={styles.value}>{price}</Text>
       </View>
     </View>
   );

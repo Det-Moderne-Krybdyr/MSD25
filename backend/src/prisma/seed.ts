@@ -44,16 +44,14 @@ async function main() {
   let cars = []
   // seed cars
   for (let i = 0; i < 100; i++) {
-    let model_id = randomInt(1, car_models.length);
-    let location_id = randomInt(1, locations.length);
+    let model_id = randomInt(1, car_models.length + 1);
+    let location_id = randomInt(1, locations.length + 1);
 
     cars.push({
       car_model_id: model_id,
       current_location_id: location_id,
     })
   }
-
-  console.log(cars);
 
   await prisma.car.createMany({
     data: cars,
@@ -62,9 +60,9 @@ async function main() {
 
   // seed reservations
   for (let i = 0; i < 100; i++) {
-    let user_id = randomInt(1, users.length);
-    let pickup_location_id = randomInt(1, locations.length);
-    let dropoff_location_id = randomInt(1, locations.length);
+    let user_id = randomInt(1, users.length + 1);
+    let pickup_location_id = randomInt(1, locations.length + 1);
+    let dropoff_location_id = randomInt(1, locations.length + 1);
     let car_id = randomInt(1, cars.length);
 
     let yearAgo = new Date();
@@ -79,7 +77,7 @@ async function main() {
     let price = new Decimal(car_price.toNumber() * daysRented)
 
 
-    await prisma.reservation.create({
+    /*await prisma.reservation.create({
       data:{
         user_id: user_id,
         pickup_location_id: pickup_location_id,
@@ -89,7 +87,7 @@ async function main() {
         end_date: dropOffDate,
         price: price,
       }
-    })
+    })*/
   }
 
 }
