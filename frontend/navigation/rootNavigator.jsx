@@ -79,12 +79,6 @@ const MainNavigator = () => {
         const bootstrapAsync = async () => {
             let userToken;
             let email;
-            // if on mobile, just login and use hardcoded data
-            if (Platform.OS !== 'web') {
-                dispatch({type: "RESTORE_TOKEN", token: "example-token"})
-                return
-            }
-
             try {
                 // Restore token stored in `SecureStore` or any other encrypted storage
                 userToken = await getValueForAsync("user_token")
