@@ -17,6 +17,7 @@ interface User_Session {
 }
 
 export async function validateToken(email: string, token: string) {
+    if (email == null || token == null) return false;
     const body = {
         email: email,
         token: token,

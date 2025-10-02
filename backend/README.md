@@ -10,5 +10,8 @@
 ## Start the backend
 `npm run dev`
 
-## Clear the database, if neede
+## Clear the database, if needed
 `npm run clear-db`
+
+## Reset the database, and migrate
+`npm run reset-db`
