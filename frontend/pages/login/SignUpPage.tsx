@@ -61,6 +61,7 @@ const SignUpPage = ({ navigation }: { navigation: any }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                textContentType="oneTimeCode"
               />
             )}
           />
@@ -80,6 +81,7 @@ const SignUpPage = ({ navigation }: { navigation: any }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                textContentType="oneTimeCode"
               />
             )}
           />
@@ -102,6 +104,7 @@ const SignUpPage = ({ navigation }: { navigation: any }) => {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
+                textContentType="oneTimeCode"
               />
             )}
           />
@@ -122,6 +125,7 @@ const SignUpPage = ({ navigation }: { navigation: any }) => {
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry
+                textContentType="oneTimeCode"
               />
             )}
           />
@@ -142,6 +146,7 @@ const SignUpPage = ({ navigation }: { navigation: any }) => {
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry
+                textContentType="oneTimeCode"
               />
             )}
           />
