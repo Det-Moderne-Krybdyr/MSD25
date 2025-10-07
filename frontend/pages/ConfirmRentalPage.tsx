@@ -43,7 +43,6 @@ function ConfirmRentalPage({ route, navigation }: any) {
                   <TextInput
                       style={styles.input}
                       value={userInfo.name}
-                      textContentType="oneTimeCode"
                       onChangeText={(text: string) => setUserInfo({...userInfo, name: text})}
                   />
               </View>
@@ -53,7 +52,6 @@ function ConfirmRentalPage({ route, navigation }: any) {
                   <TextInput
                       style={styles.input}
                       value={userInfo.email}
-                      textContentType="oneTimeCode"
                       onChangeText={(text: string) => setUserInfo({...userInfo, email: text})}
                       keyboardType="email-address"
                   />
@@ -61,31 +59,30 @@ function ConfirmRentalPage({ route, navigation }: any) {
 
               <View style={styles.inputBox}>
                   <Text style={styles.label}>Car</Text>
-                  <TextInput style={styles.input} textContentType="oneTimeCode" value={car.name} editable={false} />
+                  <TextInput style={styles.input} value={car.name} editable={false} />
               </View>
 
               <View style={styles.inputBox}>
                   <Text style={styles.label}>Pickup destination</Text>
-                  <TextInput style={styles.input} textContentType="oneTimeCode" value={pickup.name} editable={false} />
+                  <TextInput style={styles.input} value={pickup.name} editable={false} />
               </View>
 
               <View style={styles.inputBox}>
                   <Text style={styles.label}>Drop off destination</Text>
-                  <TextInput style={styles.input} textContentType="oneTimeCode" value={dropoff.name} editable={false} />
+                  <TextInput style={styles.input} value={dropoff.name} editable={false} />
               </View>
 
               <View style={styles.inputBox}>
                   <Text style={styles.label}>Dates</Text>
                   <TextInput
                       style={styles.input}
-                      textContentType="oneTimeCode"
                       value={`${range.start} → ${range.end}`}
                       editable={false}
                   />
               </View>
               <View style={styles.inputBox}>
                   <Text style={styles.label}>Price</Text>
-                  <TextInput style={styles.input} textContentType="oneTimeCode" value={calculatePrice(range, car) + "€"} editable={false} />
+                  <TextInput style={styles.input} value={calculatePrice(range, car) + "€"} editable={false} />
               </View>
 
               <View style={styles.checkboxRow}>
@@ -94,7 +91,6 @@ function ConfirmRentalPage({ route, navigation }: any) {
                       onValueChange={setAccepted}
                       color={accepted ? "#181d45" : undefined}
                       style={styles.checkbox}
-                      textContentType="oneTimeCode"
                   />
                   <Text style={styles.checkboxText}>
                       I confirm that I have read and accepted the{" "}
