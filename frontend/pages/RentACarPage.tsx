@@ -19,7 +19,10 @@ function RentACarPage({ navigation }: any) {
   const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<any | null>(null);
-  const [range, setRange] = useState<{ start: string | null; end: string | null }>({ start: null, end: null });
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  const [range, setRange] = useState<{ start: string | null; end: string | null }>({ start: today.toISOString().split("T")[0], end: tomorrow.toISOString().split("T")[0] });
 
   const [locations, setLocations] = useState<any[]>([]);
   const [carModels, setCarModels] = useState<any[]>([]);
@@ -28,7 +31,11 @@ function RentACarPage({ navigation }: any) {
     const fetchLocations = async() => {
       return sendWithAuth(getLocations)
     }
-    fetchLocations().then(setLocations)
+    fetchLocations().then((locs) => {
+        setLocations(locs)
+        if (locs && locs.length > 0) setSelectedLocation(locs[0])
+    })
+
 
   },[])
 
